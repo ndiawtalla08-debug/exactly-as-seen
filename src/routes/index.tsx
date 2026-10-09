@@ -185,7 +185,7 @@ function Index() {
           </Button>
         </div>
         <p className="mt-8 text-center text-xs text-muted-foreground">
-          <a href="/admin" className="underline-offset-4 hover:underline">Espace administrateur</a>
+          <a href="/admin/login" className="underline-offset-4 hover:underline">Espace administrateur</a>
         </p>
       </section>
     </main>

@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      chauffeur_historique: {
+        Row: {
+          action: string
+          admin_email: string | null
+          admin_id: string | null
+          ancien: Json | null
+          chauffeur_id: string
+          created_at: string
+          id: string
+          nouveau: Json | null
+        }
+        Insert: {
+          action: string
+          admin_email?: string | null
+          admin_id?: string | null
+          ancien?: Json | null
+          chauffeur_id: string
+          created_at?: string
+          id?: string
+          nouveau?: Json | null
+        }
+        Update: {
+          action?: string
+          admin_email?: string | null
+          admin_id?: string | null
+          ancien?: Json | null
+          chauffeur_id?: string
+          created_at?: string
+          id?: string
+          nouveau?: Json | null
+        }
+        Relationships: []
+      }
       chauffeurs: {
         Row: {
           couleur_vehicule: string
