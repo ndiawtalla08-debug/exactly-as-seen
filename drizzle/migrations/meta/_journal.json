@@ -15,6 +15,13 @@
       "when": 1791562289404,
       "tag": "0001_add_type_vehicule",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791562581313,
+      "tag": "0002_chauffeur_historique",
+      "breakpoints": true
     }
   ]
 }
