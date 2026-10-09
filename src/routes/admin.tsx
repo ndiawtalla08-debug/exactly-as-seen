@@ -154,7 +154,7 @@ function Dashboard() {
 
   async function updateStatut(id: string, s: string) {
     const { error } = await supabase.from("chauffeurs").update({ statut: s }).eq("id", id);
-    if (error) return toast.error("Mise à jour impossible");
+    if (error) { toast.error("Mise à jour impossible"); return; }
     setRows((rs) => rs.map((r) => (r.id === id ? { ...r, statut: s } : r)));
     toast.success("Statut mis à jour");
   }
@@ -162,7 +162,7 @@ function Dashboard() {
   async function remove(r: Chauffeur) {
     if (!confirm(`Supprimer l'inscription de ${r.prenom} ${r.nom} ?`)) return;
     const { error } = await supabase.from("chauffeurs").delete().eq("id", r.id);
-    if (error) return toast.error("Suppression impossible");
+    if (error) { toast.error("Suppression impossible"); return; }
     setRows((rs) => rs.filter((x) => x.id !== r.id));
     toast.success("Inscription supprimée");
   }
@@ -277,12 +277,12 @@ function EditDialog({ row, onClose, onSaved }: { row: Chauffeur | null; onClose:
     if (!f) return;
     const { prenom, nom, matricule_vehicule, couleur_vehicule, telephone } = f;
     if (![prenom, nom, matricule_vehicule, couleur_vehicule].every((v) => v.trim()) || !/^\+\d{8,16}$/.test(telephone))
-      return toast.error("Champs invalides");
+      { toast.error("Champs invalides"); return; }
     const { error } = await supabase.from("chauffeurs").update({
       prenom: prenom.trim(), nom: nom.trim(), matricule_vehicule: matricule_vehicule.trim().toUpperCase(),
       couleur_vehicule: couleur_vehicule.trim(), telephone,
     }).eq("id", f.id);
-    if (error) return toast.error(error.code === "23505" ? "Matricule déjà utilisé" : "Enregistrement impossible");
+    if (error) { toast.error(error.code === "23505" ? "Matricule déjà utilisé" : "Enregistrement impossible"); return; }
     onSaved(f); onClose(); toast.success("Inscription modifiée");
   }
 
