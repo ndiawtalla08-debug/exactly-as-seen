@@ -168,9 +168,9 @@ function Dashboard() {
   }
 
   function exportCsv() {
-    const head = ["Prénom", "Nom", "Matricule", "Couleur", "Téléphone", "Date d'inscription", "Statut"];
+    const head = ["Prénom", "Nom", "Matricule", "Type", "Couleur", "Téléphone", "Date d'inscription", "Statut"];
     const esc = (v: string) => `"${v.replace(/"/g, '""')}"`;
-    const lines = filtered.map((r) => [r.prenom, r.nom, r.matricule_vehicule, r.couleur_vehicule, r.telephone,
+    const lines = filtered.map((r) => [r.prenom, r.nom, r.matricule_vehicule, r.type_vehicule, r.couleur_vehicule, r.telephone,
       new Date(r.date_inscription).toLocaleString("fr-FR"), r.statut].map(esc).join(";"));
     const blob = new Blob(["\uFEFF" + [head.map(esc).join(";"), ...lines].join("\n")], { type: "text/csv;charset=utf-8" });
     const a = document.createElement("a");
@@ -219,7 +219,7 @@ function Dashboard() {
           <table className="w-full text-sm">
             <thead className="bg-muted text-left text-xs uppercase text-muted-foreground">
               <tr>
-                {["Prénom", "Nom", "Matricule", "Couleur", "Téléphone", "Date", "Statut", ""].map((h) => <th key={h} className="px-4 py-3">{h}</th>)}
+                {["Prénom", "Nom", "Matricule", "Type", "Couleur", "Téléphone", "Date", "Statut", ""].map((h) => <th key={h} className="px-4 py-3">{h}</th>)}
               </tr>
             </thead>
             <tbody>
@@ -232,6 +232,7 @@ function Dashboard() {
                   <td className="px-4 py-3">{r.prenom}</td>
                   <td className="px-4 py-3 font-semibold">{r.nom}</td>
                   <td className="px-4 py-3 font-mono">{r.matricule_vehicule}</td>
+                  <td className="px-4 py-3 font-semibold">{r.type_vehicule}</td>
                   <td className="px-4 py-3">{r.couleur_vehicule}</td>
                   <td className="px-4 py-3 whitespace-nowrap">{r.telephone}</td>
                   <td className="px-4 py-3 whitespace-nowrap text-muted-foreground">{new Date(r.date_inscription).toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" })}</td>
@@ -275,12 +276,12 @@ function EditDialog({ row, onClose, onSaved }: { row: Chauffeur | null; onClose:
 
   async function save() {
     if (!f) return;
-    const { prenom, nom, matricule_vehicule, couleur_vehicule, telephone } = f;
+    const { prenom, nom, matricule_vehicule, type_vehicule, couleur_vehicule, telephone } = f;
     if (![prenom, nom, matricule_vehicule, couleur_vehicule].every((v) => v.trim()) || !/^\+\d{8,16}$/.test(telephone))
       { toast.error("Champs invalides"); return; }
     const { error } = await supabase.from("chauffeurs").update({
       prenom: prenom.trim(), nom: nom.trim(), matricule_vehicule: matricule_vehicule.trim().toUpperCase(),
-      couleur_vehicule: couleur_vehicule.trim(), telephone,
+      type_vehicule, couleur_vehicule: couleur_vehicule.trim(), telephone,
     }).eq("id", f.id);
     if (error) { toast.error(error.code === "23505" ? "Matricule déjà utilisé" : "Enregistrement impossible"); return; }
     onSaved(f); onClose(); toast.success("Inscription modifiée");
@@ -297,6 +298,17 @@ function EditDialog({ row, onClose, onSaved }: { row: Chauffeur | null; onClose:
               <Input value={String(f[k])} maxLength={80} onChange={(e) => setF({ ...f, [k]: e.target.value })} />
             </div>
           ))}
+          <div className="space-y-1">
+            <Label>Type de véhicule</Label>
+            <select
+              className="flex h-10 w-full rounded-lg border border-input bg-card px-3 text-sm"
+              value={f.type_vehicule}
+              onChange={(e) => setF({ ...f, type_vehicule: e.target.value as Chauffeur["type_vehicule"] })}
+            >
+              <option>KAIVI</option>
+              <option>MG5</option>
+            </select>
+          </div>
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={onClose}>Annuler</Button>
