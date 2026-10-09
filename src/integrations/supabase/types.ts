@@ -24,6 +24,7 @@ export type Database = {
           prenom: string
           statut: string
           telephone: string
+          type_vehicule: string
         }
         Insert: {
           couleur_vehicule: string
@@ -34,6 +35,7 @@ export type Database = {
           prenom: string
           statut?: string
           telephone: string
+          type_vehicule?: string
         }
         Update: {
           couleur_vehicule?: string
@@ -44,6 +46,7 @@ export type Database = {
           prenom?: string
           statut?: string
           telephone?: string
+          type_vehicule?: string
         }
         Relationships: []
       }
