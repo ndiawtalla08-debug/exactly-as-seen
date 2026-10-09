@@ -35,7 +35,7 @@ function Index() {
     prenom: "", nom: "", matricule_vehicule: "", couleur: "", couleur_autre: "",
     indicatif: "+221", numero: "", consent: false, website: "",
   });
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<Partial<Record<"prenom"|"nom"|"matricule_vehicule"|"couleur"|"couleur_autre"|"numero"|"consent", string>>>({});
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
   const [serverError, setServerError] = useState("");
@@ -48,9 +48,9 @@ function Index() {
     if (form.website) { setDone(true); return; } // honeypot
     const parsed = chauffeurSchema.safeParse(form);
     if (!parsed.success) {
-      const errs: Record<string, string> = {};
+      const errs: Record<string, string> = {} as Record<string, string>;
       parsed.error.issues.forEach((i) => { errs[String(i.path[0])] ??= i.message; });
-      setErrors(errs);
+      setErrors(errs as typeof errors);
       return;
     }
     setErrors({});
