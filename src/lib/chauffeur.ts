@@ -17,6 +17,8 @@ export const COLORS = [
   "Blanc", "Noir", "Gris", "Argent", "Bleu", "Rouge", "Vert", "Jaune", "Beige", "Marron", "Orange", "Autre",
 ];
 
+export const TYPE_VEHICULES = ["KAIVI", "MG5"] as const;
+
 export const STATUTS = ["En attente", "Validé", "Rejeté"] as const;
 export type Statut = (typeof STATUTS)[number];
 
@@ -39,6 +41,7 @@ export const chauffeurSchema = z
       .max(20, "Matricule trop long")
       .regex(/^[A-Za-z0-9\s-]+$/, "Matricule invalide (lettres, chiffres, tirets)")
       .transform((v) => v.toUpperCase().replace(/\s+/g, " ")),
+    type_vehicule: z.enum(TYPE_VEHICULES, { errorMap: () => ({ message: "Choisissez un type de véhicule" }) }),
     couleur: z.string().min(1, "Choisissez une couleur"),
     couleur_autre: z.string().trim().max(40).optional(),
     indicatif: z.string().regex(/^\+\d{1,4}$/),

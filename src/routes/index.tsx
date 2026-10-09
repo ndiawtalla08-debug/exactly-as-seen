@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { COLORS, COUNTRY_CODES, chauffeurSchema, whatsappShareUrl } from "@/lib/chauffeur";
+import { COLORS, COUNTRY_CODES, TYPE_VEHICULES, chauffeurSchema, whatsappShareUrl } from "@/lib/chauffeur";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -32,10 +32,10 @@ function shareOnWhatsApp() {
 
 function Index() {
   const [form, setForm] = useState({
-    prenom: "", nom: "", matricule_vehicule: "", couleur: "", couleur_autre: "",
+    prenom: "", nom: "", matricule_vehicule: "", type_vehicule: "", couleur: "", couleur_autre: "",
     indicatif: "+221", numero: "", consent: false, website: "",
   });
-  const [errors, setErrors] = useState<Partial<Record<"prenom"|"nom"|"matricule_vehicule"|"couleur"|"couleur_autre"|"numero"|"consent", string>>>({});
+  const [errors, setErrors] = useState<Partial<Record<"prenom"|"nom"|"matricule_vehicule"|"type_vehicule"|"couleur"|"couleur_autre"|"numero"|"consent", string>>>({});
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
   const [serverError, setServerError] = useState("");
@@ -60,6 +60,7 @@ function Index() {
       prenom: d.prenom,
       nom: d.nom.toUpperCase(),
       matricule_vehicule: d.matricule_vehicule,
+      type_vehicule: d.type_vehicule,
       couleur_vehicule: d.couleur === "Autre" ? d.couleur_autre! : d.couleur,
       telephone: d.indicatif + d.numero.replace(/^0+/, ""),
     });
@@ -105,7 +106,7 @@ function Index() {
                 <Button variant="whatsapp" size="xl" onClick={shareOnWhatsApp}>
                   <MessageCircle /> Partager sur WhatsApp
                 </Button>
-                <Button variant="ghost" onClick={() => { setDone(false); setForm((f) => ({ ...f, prenom: "", nom: "", matricule_vehicule: "", numero: "", couleur: "", couleur_autre: "", consent: false })); }}>
+                <Button variant="ghost" onClick={() => { setDone(false); setForm((f) => ({ ...f, prenom: "", nom: "", matricule_vehicule: "", type_vehicule: "", numero: "", couleur: "", couleur_autre: "", consent: false })); }}>
                   Inscrire un autre chauffeur
                 </Button>
               </div>
@@ -126,6 +127,12 @@ function Index() {
               <Field label="Matricule du véhicule *" error={errors.matricule_vehicule}>
                 <Input className={`${inputCls} uppercase`} placeholder="DK-1234-AB" value={form.matricule_vehicule} maxLength={20}
                   onChange={(e) => set("matricule_vehicule", e.target.value)} />
+              </Field>
+              <Field label="Type de véhicule *" error={errors.type_vehicule}>
+                <select className={selectCls} value={form.type_vehicule} onChange={(e) => set("type_vehicule", e.target.value)}>
+                  <option value="">Sélectionner…</option>
+                  {TYPE_VEHICULES.map((t) => <option key={t}>{t}</option>)}
+                </select>
               </Field>
               <Field label="Couleur du véhicule *" error={errors.couleur || errors.couleur_autre}>
                 <select className={selectCls} value={form.couleur} onChange={(e) => set("couleur", e.target.value)}>
