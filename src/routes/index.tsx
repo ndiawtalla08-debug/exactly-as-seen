@@ -145,11 +145,11 @@ function Index() {
                 )}
               </Field>
               <Field label="Numéro de téléphone *" error={errors.numero}>
-                <div className="flex gap-2">
-                  <select className={`${selectCls} w-36 shrink-0`} value={form.indicatif} onChange={(e) => set("indicatif", e.target.value)}>
+                <div className="grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-[12rem_minmax(0,1fr)]">
+                  <select aria-label="Indicatif du pays" autoComplete="tel-country-code" className={`${selectCls} min-w-0`} value={form.indicatif} onChange={(e) => set("indicatif", e.target.value)}>
                     {COUNTRY_CODES.map((c) => <option key={c.code} value={c.code}>{c.label}</option>)}
                   </select>
-                  <Input className={inputCls} type="tel" inputMode="tel" autoComplete="tel-national" placeholder="77 123 45 67"
+                  <Input aria-label="Numéro de téléphone" className={`${inputCls} min-w-0 w-full`} type="tel" inputMode="tel" autoComplete="tel-national" placeholder="77 123 45 67"
                     value={form.numero} maxLength={16} onChange={(e) => set("numero", e.target.value)} />
                 </div>
               </Field>
