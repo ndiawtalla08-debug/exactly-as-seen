@@ -1,16 +1,16 @@
 import { z } from "zod";
 
 export const COUNTRY_CODES = [
-  { code: "+221", label: "🇸🇳 Sénégal (+221)" },
-  { code: "+33", label: "🇫🇷 France (+33)" },
-  { code: "+223", label: "🇲🇱 Mali (+223)" },
-  { code: "+224", label: "🇬🇳 Guinée (+224)" },
-  { code: "+225", label: "🇨🇮 Côte d'Ivoire (+225)" },
-  { code: "+222", label: "🇲🇷 Mauritanie (+222)" },
-  { code: "+220", label: "🇬🇲 Gambie (+220)" },
-  { code: "+245", label: "🇬🇼 Guinée-Bissau (+245)" },
-  { code: "+212", label: "🇲🇦 Maroc (+212)" },
-  { code: "+1", label: "🇺🇸 États-Unis (+1)" },
+  { code: "+221", short: "🇸🇳 +221", label: "🇸🇳 Sénégal (+221)" },
+  { code: "+33", short: "🇫🇷 +33", label: "🇫🇷 France (+33)" },
+  { code: "+223", short: "🇲🇱 +223", label: "🇲🇱 Mali (+223)" },
+  { code: "+224", short: "🇬🇳 +224", label: "🇬🇳 Guinée (+224)" },
+  { code: "+225", short: "🇨🇮 +225", label: "🇨🇮 Côte d'Ivoire (+225)" },
+  { code: "+222", short: "🇲🇷 +222", label: "🇲🇷 Mauritanie (+222)" },
+  { code: "+220", short: "🇬🇲 +220", label: "🇬🇲 Gambie (+220)" },
+  { code: "+245", short: "🇬🇼 +245", label: "🇬🇼 Guinée-Bissau (+245)" },
+  { code: "+212", short: "🇲🇦 +212", label: "🇲🇦 Maroc (+212)" },
+  { code: "+1", short: "🇺🇸 +1", label: "🇺🇸 États-Unis (+1)" },
 ];
 
 export const COLORS = [

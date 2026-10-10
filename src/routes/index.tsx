@@ -5,6 +5,7 @@ import heroImg from "@/assets/hero.jpg";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { COLORS, COUNTRY_CODES, TYPE_VEHICULES, chauffeurSchema, whatsappShareUrl } from "@/lib/chauffeur";
 
@@ -145,11 +146,16 @@ function Index() {
                 )}
               </Field>
               <Field label="Numéro de téléphone *" error={errors.numero}>
-                <div className="grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-[12rem_minmax(0,1fr)]">
-                  <select aria-label="Indicatif du pays" autoComplete="tel-country-code" className={`${selectCls} min-w-0`} value={form.indicatif} onChange={(e) => set("indicatif", e.target.value)}>
-                    {COUNTRY_CODES.map((c) => <option key={c.code} value={c.code}>{c.label}</option>)}
-                  </select>
-                  <Input aria-label="Numéro de téléphone" className={`${inputCls} min-w-0 w-full`} type="tel" inputMode="tel" autoComplete="tel-national" placeholder="77 123 45 67"
+                <div className="flex min-w-0 items-stretch gap-2">
+                  <Select value={form.indicatif} onValueChange={(v) => set("indicatif", v)}>
+                    <SelectTrigger aria-label="Indicatif du pays" className={`${selectCls} h-14 w-[6.25rem] shrink-0 px-2 text-base`}>
+                      <span className="truncate">{COUNTRY_CODES.find((c) => c.code === form.indicatif)?.short ?? form.indicatif}</span>
+                    </SelectTrigger>
+                    <SelectContent className="max-h-72">
+                      {COUNTRY_CODES.map((c) => <SelectItem key={c.code} value={c.code}>{c.label}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                  <Input aria-label="Numéro de téléphone" className={`${inputCls} h-14 min-w-0 flex-1 text-lg tracking-wide`} type="tel" inputMode="tel" autoComplete="tel-national" placeholder="77 123 45 67"
                     value={form.numero} maxLength={16} onChange={(e) => set("numero", e.target.value)} />
                 </div>
               </Field>
