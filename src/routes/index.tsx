@@ -148,7 +148,7 @@ function Index() {
               <Field label="Numéro de téléphone *" error={errors.numero}>
                 <div className="flex min-w-0 items-stretch gap-2">
                   <Select value={form.indicatif} onValueChange={(v) => set("indicatif", v)}>
-                    <SelectTrigger aria-label="Indicatif du pays" className={`${selectCls} h-14 w-[7rem] shrink-0 px-2 text-base`}>
+                    <SelectTrigger aria-label="Indicatif du pays" className={`${selectCls} h-14 w-[6.25rem] shrink-0 px-2 text-base`}>
                       <span className="truncate">{COUNTRY_CODES.find((c) => c.code === form.indicatif)?.short ?? form.indicatif}</span>
                     </SelectTrigger>
                     <SelectContent className="max-h-72">
