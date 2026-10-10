@@ -101,7 +101,7 @@ function Index() {
               <CheckCircle2 className="mx-auto h-16 w-16 text-success" />
               <h2 className="mt-4 text-2xl font-extrabold">Inscription enregistrée !</h2>
               <p className="mt-2 text-muted-foreground">
-                Merci. Votre dossier est en attente de validation. Vous serez contacté par téléphone si nécessaire.
+                Votre inscription a été enregistrée avec succès. Merci pour votre participation au recensement des chauffeurs Gocab pour les Jeux Olympiques.
               </p>
               <div className="mt-6 space-y-3">
                 <Button variant="whatsapp" size="xl" onClick={shareOnWhatsApp}>
